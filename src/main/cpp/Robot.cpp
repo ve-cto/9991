@@ -143,7 +143,7 @@ void Robot::TeleopPeriodic() {
   // Control m_shoot with the y button
     if (yButtonPressed) {
        
-        m_shoot->Set(0.2); // shooter
+        m_shoot->Set(0.15); // shooter
         m_intake->Set(-0.5); // intake
         m_load->Set(0.4); // loader
     } 

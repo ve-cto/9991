@@ -101,7 +101,7 @@ void Robot::TeleopPeriodic() {
 
     // Arcade drive for differential drive system
     
-     m_robotDrive.ArcadeDrive(speed*m_driverController1.GetLeftY(), -speed*m_driverController1.GetRightX());
+     m_robotDrive.ArcadeDrive(speed*m_driverController2.GetLeftY(), -speed*m_driverController2.GetRightX());
 
 
     // Shoot it! Incoporated the full thing into one, to avoid

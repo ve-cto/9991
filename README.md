@@ -1,14 +1,10 @@
-# NOTICE!!!
-This code is not updated to recent, do not use it, as it contains errors. This will be fixed (hopefully) by 13:53 AWST.
-
 # TODO
 * Create logic and variables for the Lifting Mechanism
 * Fine tune the relation between rotating the robot on a single point, and rotating the robot while driving
 * ~~Enable logic for picking NOTE's up from the SOURCE, auto-stopping with an endstop.~~
 
-## Cloning this repo
-Clone the repo, navigate to /9991/, and replace the /src/ folder with the one that you just cloned. (You can also download Robot.ccp and Robot.h directly, and replace them, if you don't know how to clone. This is not a necessary step.)
-
+## Github integration
+The document is now integrated with github. This means that any changes (commits) that are made and published are reflected on all other versions.
 
 ## Operation Notes
 Connect the CAN identity of the motor controllers to motors as follows:

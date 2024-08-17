@@ -40,50 +40,57 @@
 
 class Robot : public frc::TimedRobot {
 public:
-    void RobotInit() override;
-    void TeleopPeriodic() override;
-    void RobotPeriodic() override;
-    void AutonomousInit() override;
-    void AutonomousPeriodic() override;
+  void RobotInit() override;
+  void TeleopPeriodic() override;
+  void RobotPeriodic() override;
+  void AutonomousInit() override;
+  void AutonomousPeriodic() override;
     
 
 private:
-    std::unique_ptr<frc::XboxController> xboxController;
-    std::unique_ptr<frc::XboxController> xboxController2;
-    std::unique_ptr<WPI_VictorSPX> m_intake; // Motor with CAN ID 1
-    std::unique_ptr<WPI_VictorSPX> m_shoot;  // Motor with CAN ID 3
-    std::unique_ptr<WPI_VictorSPX> m_load;   // Motor with CAN ID 2
-    std::unique_ptr<frc::DigitalInput> limitSwitch;
+  // Create class for xBox Controllers 1 and 2
+  std::unique_ptr<frc::XboxController> xboxController1;
+  std::unique_ptr<frc::XboxController> xboxController2;
+
+  std::unique_ptr<WPI_VictorSPX> m_intake; // Motor with CAN ID 8
+  std::unique_ptr<WPI_VictorSPX> m_shoot;  // Motor with CAN ID 3
+  std::unique_ptr<WPI_VictorSPX> m_load;   // Motor with CAN ID 1
+  std::unique_ptr<frc::DigitalInput> limitSwitch; // I/O 0
     
-    //ctre::phoenix::motorcontrol::can::WPI_VictorSPX liftingMotor {2};
+  //ctre::phoenix::motorcontrol::can::WPI_VictorSPX liftingMotor {2};
    
-    ctre::phoenix::motorcontrol::can::WPI_VictorSPX frontLeftMotor {7};
-    ctre::phoenix::motorcontrol::can::WPI_VictorSPX rearLeftMotor {6};
-    ctre::phoenix::motorcontrol::can::WPI_VictorSPX frontRightMotor {5};
-    ctre::phoenix::motorcontrol::can::WPI_VictorSPX rearRightMotor {4};
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX frontLeftMotor {7};
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX rearLeftMotor {6};
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX frontRightMotor {5};
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX rearRightMotor {4};
 
-    frc::MotorControllerGroup m_rightMotor {frontRightMotor, rearRightMotor};
-    frc::MotorControllerGroup m_leftMotor {frontLeftMotor, rearLeftMotor};
-     frc::DifferentialDrive m_robotDrive {m_leftMotor, m_rightMotor};
+  // Group the front and back motors of each side into m_rightMotor and m_leftMotor
+  frc::MotorControllerGroup m_rightMotor {frontRightMotor, rearRightMotor};
+  frc::MotorControllerGroup m_leftMotor {frontLeftMotor, rearLeftMotor};
+  frc::DifferentialDrive m_robotDrive {m_leftMotor, m_rightMotor};
  
-    
-    frc::Timer timer;
+  // Initialise frc::Timer as timer
+  frc::Timer timer;
 
-    double slow= 0.55;
-    double fast=0.70;
-    double reg=0.65;
-    double speed=0.65;
+  // Define speed multipliers
+  double slow= 0.4;
+  double fast=0.75;
+  double reg=0.65;
+  double speed=0.65;
 
- //Controller
+  // define m_driverControllerX with the XBox Controllers
   frc::XboxController m_driverController1 {1};
   frc::XboxController m_driverController2 {0};
 
 
-    bool motor2Running = false; // Track if m_shoot is running
 
- //public:
- //void RobotInit() override;
- //void RobotPeriodic() override;
+  // What is this even for?
+  bool motor2Running = false; // Track if m_shoot is running
+
+
+  //public:
+  //void RobotInit() override;
+  //void RobotPeriodic() override;
   /*void AutonomousInit() override;
   void AutonomousPeriodic() override;
   void TeleopInit() override;

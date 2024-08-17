@@ -79,8 +79,8 @@ private:
   double speed=0.65;
 
   // define m_driverControllerX with the XBox Controllers
-  frc::XboxController m_driverController1 {1};
-  frc::XboxController m_driverController2 {0};
+  frc::XboxController m_driverController1 {0};
+  frc::XboxController m_driverController2 {1};
 
 
 

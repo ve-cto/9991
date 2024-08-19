@@ -1,5 +1,5 @@
 # TODO
-* Create logic and variables for the Lifting Mechanism
+* Create logic and ~~variables~~ for the Lifting Mechanism
 * Fine tune the relation between rotating the robot on a single point, and rotating the robot while driving
 * ~~Enable logic for picking NOTE's up from the SOURCE, auto-stopping with an endstop.~~
 

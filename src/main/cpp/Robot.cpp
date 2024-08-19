@@ -10,7 +10,7 @@ void Robot::RobotInit() {
   m_intake = std::make_unique<WPI_VictorSPX>(8);
   m_shoot = std::make_unique<WPI_VictorSPX>(3);
   m_load = std::make_unique<WPI_VictorSPX>(1);
-  
+  m_lift = std::make_unique<WPI_VictorSPX>(2);
   // Invert the motors on the Right-hand side
   m_rightMotor.SetInverted(true);
 

@@ -17,6 +17,9 @@ void Robot::RobotInit() {
   // Initialize limit switch
   intakeLimitSwitch = std::make_unique<frc::DigitalInput>(0); // Digital Input port 0
   liftingLimitSwitch = std::make_unique<frc::DigitalInput>(1); // Digital Input port 1
+
+ 
+  
 }
 
  void Robot::RobotPeriodic() {}
@@ -68,6 +71,16 @@ void Robot::AutonomousPeriodic() {
     }*/
 }
 
+void Robot::TeleopInit() {
+  while (!liftingLimitSwitch) {
+    m_lift->Set(0.3);
+  }
+  m_lift->Set(-0.3);
+  frc::Wait(0.5_s);
+  while (!liftingLimitSwitch) {
+    m_lift->Set(0.2);
+  }
+}
 
 void Robot::TeleopPeriodic() {
   // Get bumper values
@@ -92,6 +105,17 @@ void Robot::TeleopPeriodic() {
   m_robotDrive.ArcadeDrive(speed*m_driverController1.GetLeftY(), -speed*m_driverController1.GetRightX());
   // m_robotDrive.ArcadeDrive(speed*m_driverController2.GetLeftY(), -speed*m_driverController2.GetRightX());
 
+
+  // Start lifting on bButtonPressed
+  if (bButtonPressed) {
+    if (bButtonPressed && !liftingLimitSwitch) {
+      m_lift->Set(0.8);
+    } else if (bButtonPressed && liftingLimitSwitch) {
+      
+    } else {
+      
+    }
+  }
   // Shoot the note on aButtonPressed
   if (aButtonPressed)  {
     m_shoot->Set(1.0);

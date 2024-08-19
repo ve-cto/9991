@@ -15,7 +15,8 @@ void Robot::RobotInit() {
   m_rightMotor.SetInverted(true);
 
   // Initialize limit switch
-  limitSwitch = std::make_unique<frc::DigitalInput>(0); // Digital Input port 0
+  intakeLimitSwitch = std::make_unique<frc::DigitalInput>(0); // Digital Input port 0
+  liftingLimitSwitch = std::make_unique<frc::DigitalInput>(1); // Digital Input port 1
 }
 
  void Robot::RobotPeriodic() {}
@@ -77,20 +78,19 @@ void Robot::TeleopPeriodic() {
   bool aButtonPressed = xboxController1->GetAButton(); // A button state
   bool yButtonPressed = xboxController1->GetYButton();
   bool xButtonPressed = xboxController1->GetXButton();
-  
+  bool bButtonPressed = xboxController1->GetBButton();
   
   // Get trigger status from either controller (commented out)
   /*
-  bool leftTrigger = xboxController1->GetLeftTriggerAxis();
-  bool rightTrigger = xboxController1->GetRightTriggerAxis();
+  bool leftTrigger = xboxController2->GetLeftTriggerAxis();
+  bool rightTrigger = xboxController2->GetRightTriggerAxis();
   */
   bool leftTrigger = xboxController1->GetLeftTriggerAxis();
   bool rightTrigger = xboxController1->GetRightTriggerAxis();
 
   // Arcade drive for differential drive system
-  // m_robotDrive.ArcadeDrive(speed*m_driverController1.GetLeftY(), -speed*m_driverController2.GetRightX());
   m_robotDrive.ArcadeDrive(speed*m_driverController1.GetLeftY(), -speed*m_driverController1.GetRightX());
-
+  // m_robotDrive.ArcadeDrive(speed*m_driverController2.GetLeftY(), -speed*m_driverController2.GetRightX());
 
   // Shoot the note on aButtonPressed
   if (aButtonPressed)  {
@@ -106,7 +106,7 @@ void Robot::TeleopPeriodic() {
 
   // Control m_intake with top-bumpers
   if (!aButtonPressed && !yButtonPressed) {
-    if (rightBumper && limitSwitch->Get()) {
+    if (rightBumper && intakeLimitSwitch->Get()) {
       m_intake->Set(-0.7); // Spin intake forward if the limit switch is not pressed while holding right bumper
     } else if (leftBumper) {
         m_intake->Set(0.5); // Spin m_intake backward at -0.5 speed if left bumper is pressed
@@ -124,7 +124,7 @@ void Robot::TeleopPeriodic() {
 
   // Retrieve note from Source on X button press (also useful for testing)
   if (xButtonPressed) {
-    if (xButtonPressed && limitSwitch->Get()) { // Loop until limit switch triggered
+    if (xButtonPressed && intakeLimitSwitch->Get()) { // Only run if limit switch is not depressed
       m_shoot->Set(-0.4);
       m_load->Set(-0.3);
     } 
@@ -138,7 +138,7 @@ void Robot::TeleopPeriodic() {
     speed = fast;
   }
   else {
-        speed = reg;
+    speed = reg;
   }
 
 } // this is the end of TeleOperatedPeriodic() {}

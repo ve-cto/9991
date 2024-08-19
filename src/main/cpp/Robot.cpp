@@ -84,12 +84,12 @@ void Robot::TeleopPeriodic() {
   bool leftTrigger = xboxController1->GetLeftTriggerAxis();
   bool rightTrigger = xboxController1->GetRightTriggerAxis();
   */
-  bool leftTrigger = xboxController2->GetLeftTriggerAxis();
-  bool rightTrigger = xboxController2->GetRightTriggerAxis();
+  bool leftTrigger = xboxController1->GetLeftTriggerAxis();
+  bool rightTrigger = xboxController1->GetRightTriggerAxis();
 
   // Arcade drive for differential drive system
   // m_robotDrive.ArcadeDrive(speed*m_driverController1.GetLeftY(), -speed*m_driverController2.GetRightX());
-  m_robotDrive.ArcadeDrive(speed*m_driverController2.GetLeftY(), -speed*m_driverController2.GetRightX());
+  m_robotDrive.ArcadeDrive(speed*m_driverController1.GetLeftY(), -speed*m_driverController1.GetRightX());
 
 
   // Shoot the note on aButtonPressed

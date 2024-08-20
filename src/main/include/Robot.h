@@ -57,7 +57,7 @@ private:
   std::unique_ptr<WPI_VictorSPX> m_load;   // Motor with CAN ID 1
   std::unique_ptr<WPI_VictorSPX> m_lift;
   std::unique_ptr<frc::DigitalInput> limitSwitch; // I/O 0
-    
+  std::unique_ptr<frc::DigitalInput> liftLimitSwitch;
   //ctre::phoenix::motorcontrol::can::WPI_VictorSPX liftingMotor {2};
    
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX frontLeftMotor {7};
@@ -80,8 +80,8 @@ private:
   double speed=0.65;
 
   // define m_driverControllerX with the XBox Controllers
-  frc::XboxController m_driverController1 {1};
-  frc::XboxController m_driverController2 {0};
+  frc::XboxController m_driverController1 {0};
+  frc::XboxController m_driverController2 {1};
 
 
 

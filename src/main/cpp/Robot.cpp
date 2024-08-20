@@ -16,6 +16,9 @@ void Robot::RobotInit() {
 
   // Initialize limit switch
   limitSwitch = std::make_unique<frc::DigitalInput>(0); // Digital Input port 0
+  liftLimitSwitch = std::make_unique<frc::DigitalInput>(2);
+
+  frc::CameraServer::StartAutomaticCapture();
 }
 
  void Robot::RobotPeriodic() {}
@@ -78,8 +81,8 @@ void Robot::TeleopPeriodic() {
   bool yButtonPressed = xboxController1->GetYButton();
   bool xButtonPressed = xboxController1->GetXButton();
   
-  bool leftStickPressed = xboxController1->GetLeftStickButton();
-  bool rightStickPressed = xboxController1->GetRightStickButton();
+  bool backButtonPressed = xboxController1->GetBackButton();
+  bool startButtonPressed = xboxController1->GetStartButton();
   // Get trigger status from either controller (commented out)
   /*
   bool leftTrigger = xboxController1->GetLeftTriggerAxis();
@@ -93,10 +96,10 @@ void Robot::TeleopPeriodic() {
   m_robotDrive.ArcadeDrive(speed*m_driverController2.GetLeftY(), -speed*m_driverController2.GetRightX());
 
   
-  if (rightStickPressed) {
-    m_lift->Set(1.0);
-  } else if (leftStickPressed) {
-    m_lift->Set(-1.0);
+  if (startButtonPressed && liftLimitSwitch->Get()) {
+    m_lift->Set(0.8);
+  } else if (backButtonPressed) {
+    m_lift->Set(-0.8);
   } else {
     m_lift->Set(0.0);
   }

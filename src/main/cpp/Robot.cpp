@@ -10,7 +10,7 @@ void Robot::RobotInit() {
   m_intake = std::make_unique<WPI_VictorSPX>(8);
   m_shoot = std::make_unique<WPI_VictorSPX>(3);
   m_load = std::make_unique<WPI_VictorSPX>(1);
-  
+  m_lift = std::make_unique<WPI_VictorSPX>(2);
   // Invert the motors on the Right-hand side
   m_rightMotor.SetInverted(true);
 
@@ -78,7 +78,8 @@ void Robot::TeleopPeriodic() {
   bool yButtonPressed = xboxController1->GetYButton();
   bool xButtonPressed = xboxController1->GetXButton();
   
-  
+  bool leftStickPressed = xboxController1->GetLeftStickButton();
+  bool rightStickPressed = xboxController1->GetRightStickButton();
   // Get trigger status from either controller (commented out)
   /*
   bool leftTrigger = xboxController1->GetLeftTriggerAxis();
@@ -91,6 +92,14 @@ void Robot::TeleopPeriodic() {
   // m_robotDrive.ArcadeDrive(speed*m_driverController1.GetLeftY(), -speed*m_driverController2.GetRightX());
   m_robotDrive.ArcadeDrive(speed*m_driverController2.GetLeftY(), -speed*m_driverController2.GetRightX());
 
+  
+  if (rightStickPressed) {
+    m_lift->Set(1.0);
+  } else if (leftStickPressed) {
+    m_lift->Set(-1.0);
+  } else {
+    m_lift->Set(0.0);
+  }
 
   // Shoot the note on aButtonPressed
   if (aButtonPressed)  {

@@ -55,6 +55,7 @@ private:
   std::unique_ptr<WPI_VictorSPX> m_intake; // Motor with CAN ID 8
   std::unique_ptr<WPI_VictorSPX> m_shoot;  // Motor with CAN ID 3
   std::unique_ptr<WPI_VictorSPX> m_load;   // Motor with CAN ID 1
+  std::unique_ptr<WPI_VictorSPX> m_lift;
   std::unique_ptr<frc::DigitalInput> limitSwitch; // I/O 0
     
   //ctre::phoenix::motorcontrol::can::WPI_VictorSPX liftingMotor {2};

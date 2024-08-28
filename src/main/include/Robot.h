@@ -65,19 +65,26 @@ private:
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX frontRightMotor {5};
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX rearRightMotor {4};
 
-  // Group the front and back motors of each side into m_rightMotor and m_leftMotor
+  // Group the front and back motors of each side into m_rightMotor and m_leftMotor and start DifferentialDrive
   frc::MotorControllerGroup m_rightMotor {frontRightMotor, rearRightMotor};
   frc::MotorControllerGroup m_leftMotor {frontLeftMotor, rearLeftMotor};
   frc::DifferentialDrive m_robotDrive {m_leftMotor, m_rightMotor};
- 
+  
   // Initialise frc::Timer as timer
   frc::Timer timer;
 
   // Define speed multipliers
-  double slow= 0.4;
-  double fast=0.75;
-  double reg=0.65;
+  double slow= 0.55;
+  double fast=0.9;
+  double reg=0.75;
   double speed=0.65;
+
+  float m_intakeVar = 0.0;
+  float m_shootVar = 0.0;
+  float m_loadVar = 0.0;
+  float m_liftVar = 0.0;
+
+  float prevTimer = 0.0;
 
   // define m_driverControllerX with the XBox Controllers
   frc::XboxController m_driverController1 {0};

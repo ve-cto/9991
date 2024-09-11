@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <frc/smartdashboard/SmartDashboard.h>
+
 #include <string>
 
 #include <frc/TimedRobot.h>

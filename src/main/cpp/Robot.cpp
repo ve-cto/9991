@@ -2,7 +2,7 @@
 #include <fmt/core.h>
 
 void Robot::RobotInit() {
-
+  // frc::SmartDashboard::PutBoolean("Note Endstop Status", limitSwitch->Get());
   // Initialize Xbox controllers
   xboxController1 = std::make_unique<frc::XboxController>(0);
   xboxController2 = std::make_unique<frc::XboxController>(1);
@@ -135,7 +135,7 @@ void Robot::TeleopPeriodic() {
   m_shoot->Set(m_shootVar);
   m_load->Set(m_loadVar);
 
-  // frc::SmartDashboard::PutBoolean("Note Endstop Status", limitSwitch->Get());
+  frc::SmartDashboard::PutBoolean("Note Endstop Status", limitSwitch->Get());
 // DUAL CONTROLLER CONTROL
 /*
   // Get bumper values

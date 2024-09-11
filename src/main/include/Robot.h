@@ -48,6 +48,10 @@ public:
   void AutonomousInit() override;
   void AutonomousPeriodic() override;
     
+  frc::SendableChooser<std::string> m_chooser;
+  const std::string kAutoNameDefault = "Centre Automonous";
+  const std::string kAutoNameCustom = "Other Automonous";
+  std::string m_autoSelected;
 
 private:
   // Create class for xBox Controllers 1 and 2

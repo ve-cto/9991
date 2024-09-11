@@ -22,6 +22,12 @@ void Robot::RobotInit() {
   
 
   frc::CameraServer::StartAutomaticCapture();
+
+  
+
+  m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
+  m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
+  frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 }
 
 
@@ -30,6 +36,14 @@ void Robot::RobotPeriodic() {}
 void Robot::AutonomousInit() {
   timer.Reset();
   timer.Start();
+
+  m_autoSelected = m_chooser.GetSelected();
+  fmt::print("Auto selected: {}\n", m_autoSelected);
+  
+  m_liftVar = 0.0;
+  m_intakeVar = 0.0;
+  m_shootVar = 0.0;
+  m_loadVar = 0.0;
 }
 
 void Robot::AutonomousPeriodic() {
@@ -37,22 +51,8 @@ void Robot::AutonomousPeriodic() {
   m_intake->Set(m_intakeVar);
   m_shoot->Set(m_shootVar);
   m_load->Set(m_loadVar);
-
-  /*if (timer.Get() <=2_s) {
-    m_robotDrive.ArcadeDrive(-0.5,0);
-  } else if (timer.Get() <= 2.5_s) {
-      m_shoot->Set(1.0);
-  } else if (timer.Get() <= 4.5_s) {
-      m_intake->Set(-0.5); // Set m_intake to 0.5 speed after 0.5 seconds delay
-      m_load->Set(1.0);   // Turn on m_load at full speed
-  } else if (timer.Get() <= 5_s) {
-      m_intake->Set(0.0); // Stop m_intake if the A button is not pressed or delay not reached
-      m_load->Set(0.0);   // Stop m_load
-      m_shoot->Set(0.0);
-  } else {
-    m_robotDrive.ArcadeDrive(0,0);
-    m_shoot->Set(0.0);
-  }*/
+  
+if (m_autoSelected == "Centre Automonous") {
   if (timer.Get() <= 2_s) { // Spin up shooter
     m_shootVar = 1.0;
   } else if (timer.Get() <= 4_s) { // Shoot!
@@ -70,20 +70,6 @@ void Robot::AutonomousPeriodic() {
       m_intakeVar = -0.85;
     }
     m_shootVar = 1.0;
-  /*
-  // } else if (timer.Get() <= 6.5_s) {
-    // m_robotDrive.ArcadeDrive(0.0,-0.4);
-  // } else if (timer.Get() <= 10.0_s) {
-    // m_robotDrive.ArcadeDrive(0.4,0.0);
-  // } else if (timer.Get() <=```3e 10_s) {
-   //  m_robotDrive.ArcadeDrive(0.0,0.0);
-  // } else if (timer.Get() <= 13_s) {
-    // m_intakeVar = -0.5;
-    // m_robotDrive.ArcadeDrive(0.4, 0.0);
-  // } else if (timer.Get() <= 14_s) {
-    // m_intakeVar = -0.4;
-    // m_robotDrive.ArcadeDrive(-0.4,0.0);
-    */
   } else if (timer.Get() <= 11_s) { // Go backwards and spin up shooter
     m_intakeVar = -0.8;
     m_robotDrive.ArcadeDrive(-0.58, 0);
@@ -99,32 +85,14 @@ void Robot::AutonomousPeriodic() {
     m_loadVar = 0.0;
     m_shootVar = 0.0;
   }
-  
+} else if (m_autoSelected == "Other Automonous") {
 
-  // Last-Years automonous routine
-  /*if (m_timer.Get() <= 1_s){
-      m_robotDrive.ArcadeDrive(0.5,0);
-    }else if(m_timer.Get() <= 5.5_s){
-      m_piston.Set(1);
-      m_arm.Set(-0.25);
-    }else if(m_timer.Get()<=8.5_s){
-      m_gripper.Set(0.5);
-      m_arm.Set(0.05);
-    }else if(m_timer.Get()<=8.75_s){
-      m_robotDrive.ArcadeDrive(-0.525,0);
-      m_gripper.Set(-0.2);
-      m_arm.Set(0.05);
-    }else if(m_timer.Get()<=11.75_s){
-      m_arm.Set(0.2);
-      m_gripper.Set(-0.25);
-    }else if(m_timer.Get()<=12.4_s) {
-      m_robotDrive.ArcadeDrive(-0.6,0);
-      m_gripper.Set(0);
-      m_arm.Set(0.05);
-    }else{
-      m_robotDrive.ArcadeDrive(-0.7,0);
-      m_arm.Set(0.05);
-    }*/
+} else {
+
+}
+
+// Commented for testing purposes
+  
 }
 
 
@@ -177,7 +145,7 @@ void Robot::TeleopPeriodic() {
   bool leftTrigger = xboxController2->GetLeftTriggerAxis();
   bool rightTrigger = xboxController2->GetRightTriggerAxis();
   
- /*r
+ /*
   bool leftTrigger = xboxController2->GetLeftTriggerAxis();
   bool rightTrigger = xboxController2->GetRightTriggerAxis();
 */

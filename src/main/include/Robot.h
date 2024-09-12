@@ -50,7 +50,9 @@ public:
     
   frc::SendableChooser<std::string> m_chooser;
   const std::string kAutoNameDefault = "Centre Automonous";
-  const std::string kAutoNameCustom = "Other Automonous";
+  const std::string kAutoNameCustom1 = "Left-Sided Automonous";
+  const std::string kAutoNameCustom2 = "Shoot and Drive Out";
+  const std::string kAutoNameCustom3 = "Do Nothing";
   std::string m_autoSelected;
 
 private:

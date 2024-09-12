@@ -26,7 +26,9 @@ void Robot::RobotInit() {
   
 
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
-  m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
+  m_chooser.AddOption(kAutoNameCustom1, kAutoNameCustom1);
+  m_chooser.AddOption(kAutoNameCustom2, kAutoNameCustom2);
+  m_chooser.AddOption(kAutoNameCustom3, kAutoNameCustom3);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 }
 

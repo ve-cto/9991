@@ -85,10 +85,69 @@ if (m_autoSelected == "Centre Automonous") {
     m_loadVar = 0.0;
     m_shootVar = 0.0;
   }
-} else if (m_autoSelected == "Other Automonous") {
+} else if (m_autoSelected == "Left-sided Automonous") {
+    if (timer.Get() <= 1_s) {
+      m_robotDrive.ArcadeDrive(-0.4, 0.4);
+    if (timer.Get() <= 3_s) { // Spin up shooter
+    m_shootVar = 1.0;
+  } else if (timer.Get() <= 6_s) { // Shoot!
+    m_loadVar = 1.0;
+    m_intakeVar = -0.7;
+  } else if (timer.Get() <= 6.5_s) { // Stop
+    m_loadVar = 0.0;
+    m_shootVar = 0.0;
+    m_intakeVar = 0.0;
+  } else if (timer.Get() <= 8_s) {
+    m_robotDrive.ArcadeDrive(-0.5, 0.0);
+  } else if (timer.Get() <= 8.7_s) {
+    m_robotDrive.ArcadeDrive(0.0, 0.5);
+  } else if (timer.Get() <= 11_s) {
+    if (limitSwitch->Get()) { // Stop for limit switch
+      m_intakeVar = -0.85;
+    }
+    m_shootVar = 1.0;
+  } else if (timer.Get() <= 12_s) { // Go backwards and spin up shooter
+    m_intakeVar = -0.8;
+    m_robotDrive.ArcadeDrive(0.8, 0.0);
+  } else {
+    m_robotDrive.ArcadeDrive(0.0,0.0);
+    m_intakeVar = 0.0;
+    m_loadVar = 0.0;
+    m_shootVar = 0.0;
+  }
 
+} else if (m_autoSelected == "Shoot and Drive out") {
+    if (timer.Get() <= 2_s) { // Spin up shooter
+    m_shootVar = 1.0;
+  } else if (timer.Get() <= 4_s) { // Shoot!
+    m_loadVar = 1.0;
+    m_intakeVar = -0.7;
+  } else if (timer.Get() <= 4.5_s) { // Stop
+    m_loadVar = 0.0;
+    m_shootVar = 0.0;
+    m_intakeVar = 0.0;
+  } else if (timer.Get() <= 5_s) { // Rotate a bit
+    m_robotDrive.ArcadeDrive(0.0, -0.35);
+  } else if (timer.Get() <= 8_s) { // Go forward
+    m_robotDrive.ArcadeDrive(0.59, 0);
+  } else {
+    m_robotDrive.ArcadeDrive(0.0,0.0);
+    m_intakeVar = 0.0;
+    m_loadVar = 0.0;
+    m_shootVar = 0.0;
+  }
+
+
+} else if (m_autoSelected == "Do Nothing") {
+    m_robotDrive.ArcadeDrive(0.0,0.0);
+    m_intakeVar = 0.0;
+    m_loadVar = 0.0;
+    m_shootVar = 0.0;
 } else {
-
+    m_robotDrive.ArcadeDrive(0.0,0.0);
+    m_intakeVar = 0.0;
+    m_loadVar = 0.0;
+    m_shootVar = 0.0;
 }
 
 // Commented for testing purposes

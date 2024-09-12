@@ -2,13 +2,8 @@
 * Put all sensors and endstops on SmartDashboard
 * Implement auto-selecting on SmartDashboard
 * Make more autos
-* Chain stuff
+* ~~Chain stuff~~
 * ~~Create logic and variables for the Lifting Mechanism~~
-* ~~Fine tune the relation between rotating the robot on a single point, and rotating the robot while driving~~ NOT NEEDED
-* ~~Enable logic for picking NOTE's up from the SOURCE, auto-stopping with an endstop.~~
-
-## Github integration
-The document is now integrated with github. This means that any changes (commits) that are made and published are reflected on all other versions.
 
 ## Operation Notes
 Connect the CAN identity of the motor controllers to motors as follows:
@@ -17,7 +12,7 @@ Connect the CAN identity of the motor controllers to motors as follows:
 * 6 -> Front-Left Drivechain Motor
 * 5 -> Back-Right Drivechain Motor
 * 4 -> Front-Right Drivechain Motor
-* 3 -> *Unnasigned*
+* 3 -> Lifting Motor
 * 2 -> Loading Motor
 * 1 -> Firing Motor
 
@@ -31,7 +26,7 @@ Connect other devices and sensors as follows:
 To begin operation of the robot:
 - Connect the XBox controller to the Driver Station
 - Launch WPILib on the Driver Station 
-  > It should open the code automatically, if not, open /28-8-24/, and open the folder in WPILib.
+  > It should open the code automatically, if not, open /28-8-24/, find a folder called "FINISHED CODE WORKING" or something like that, and open it.
 - Press Control+Shift+P to open the command pallet, type "Git: Pull", and press enter. Press confirm on any following dialogue boxes.
 
 - Turn on the robot by connecting a battery and pushing in the yellow switch on the Power Module
@@ -48,3 +43,5 @@ To begin operation of the robot:
   - Select "Teleoperated" from the scroll menu
   - When ready, click "Enabled"
   > If during operation you lose control, with the Driver Station reporting "Emergency Stop", you need to reboot and reconnect to the robot.
+
+  - To practice using automatic timings, go to the configuration window of the Driver Control Panel, and change the Practice timings to your liking. Then head back to the main menu and enable Practice.

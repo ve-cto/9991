@@ -33,7 +33,9 @@ void Robot::RobotInit() {
 }
 
 
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+  frc::SmartDashboard::PutBoolean("Note Endstop Status", limitSwitch->Get());
+}
 
 void Robot::AutonomousInit() {
   timer.Reset();
@@ -87,10 +89,10 @@ if (m_autoSelected == "Centre Automonous") {
     m_loadVar = 0.0;
     m_shootVar = 0.0;
   }
-} else if (m_autoSelected == "Left-sided Automonous") {
-    if (timer.Get() <= 1_s) {
-      m_robotDrive.ArcadeDrive(-0.4, 0.4);
-    if (timer.Get() <= 3_s) { // Spin up shooter
+} else if (m_autoSelected == "Left-Sided Automonous") {
+  if (timer.Get() <= 1_s) {
+    m_robotDrive.ArcadeDrive(-0.4, 0.4);
+  } else if (timer.Get() <= 3_s) { // Spin up shooter
     m_shootVar = 1.0;
   } else if (timer.Get() <= 6_s) { // Shoot!
     m_loadVar = 1.0;
@@ -118,7 +120,7 @@ if (m_autoSelected == "Centre Automonous") {
     m_shootVar = 0.0;
   }
 
-} else if (m_autoSelected == "Shoot and Drive out") {
+} else if (m_autoSelected == "Shoot and Drive Out") {
     if (timer.Get() <= 2_s) { // Spin up shooter
     m_shootVar = 1.0;
   } else if (timer.Get() <= 4_s) { // Shoot!
@@ -164,7 +166,7 @@ void Robot::TeleopPeriodic() {
   m_shoot->Set(m_shootVar);
   m_load->Set(m_loadVar);
 
-  frc::SmartDashboard::PutBoolean("Note Endstop Status", limitSwitch->Get());
+  
 // DUAL CONTROLLER CONTROL
 /*
   // Get bumper values

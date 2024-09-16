@@ -1,7 +1,7 @@
 # TODO
 * Put all sensors and endstops on SmartDashboard
-* Implement auto-selecting on SmartDashboard
-* Make more autos
+* ~~Implement auto-selecting on SmartDashboard~~
+* ~~Make more autos~~
 * ~~Chain stuff~~
 * ~~Create logic and variables for the Lifting Mechanism~~
 

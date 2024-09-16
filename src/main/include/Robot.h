@@ -63,10 +63,9 @@ private:
   std::unique_ptr<WPI_VictorSPX> m_intake; // Motor with CAN ID 8
   std::unique_ptr<WPI_VictorSPX> m_shoot;  // Motor with CAN ID 3
   std::unique_ptr<WPI_VictorSPX> m_load;   // Motor with CAN ID 1
-  std::unique_ptr<WPI_VictorSPX> m_lift;
+  std::unique_ptr<WPI_VictorSPX> m_lift;   // Motor with CAN ID 2
   std::unique_ptr<frc::DigitalInput> limitSwitch; // I/O 0
   std::unique_ptr<frc::DigitalInput> liftLimitSwitch;
-  //ctre::phoenix::motorcontrol::can::WPI_VictorSPX liftingMotor {2};
    
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX frontLeftMotor {7};
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX rearLeftMotor {6};
@@ -82,17 +81,17 @@ private:
   frc::Timer timer;
 
   // Define speed multipliers
-  double slow= 0.55;
-  double fast=0.9;
-  double reg=0.75;
-  double speed=0.65;
+  double slow = 0.55;
+  double fast = 0.9;
+  double reg = 0.75;
+  double speed = 0.65;
 
   float m_intakeVar = 0.0;
   float m_shootVar = 0.0;
   float m_loadVar = 0.0;
   float m_liftVar = 0.0;
 
-  float prevTimer = 0.0;
+  bool limitSwitchVal = false;
 
   // define m_driverControllerX with the XBox Controllers
   frc::XboxController m_driverController1 {0};

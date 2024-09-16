@@ -35,6 +35,7 @@ void Robot::RobotInit() {
 
 void Robot::RobotPeriodic() {
   frc::SmartDashboard::PutBoolean("Note Endstop Status", limitSwitch->Get());
+  bool limitSwitchVal = limitSwitch->Get();
 }
 
 void Robot::AutonomousInit() {
@@ -282,7 +283,7 @@ void Robot::TeleopPeriodic() {
   */
   // Control m_intake with top-bumpers
   if (!aButtonPressed && !yButtonPressed) {
-    if (rightBumper && limitSwitch->Get()) {
+    if (rightBumper && limitSwitchVal) {
       m_intakeVar = -0.7; // Spin intake forward if the limit switch is not pressed while holding right bumper
     } else if (leftBumper) {
         m_intakeVar = 0.7; // Spin m_intake backward at -0.5 speed if left bumper is pressed
@@ -300,7 +301,7 @@ void Robot::TeleopPeriodic() {
 
   // Retrieve note from Source on X button press (also useful for testing)
   if (xButtonPressed) {
-    if (xButtonPressed && limitSwitch->Get()) { // Loop until limit switch triggered
+    if (xButtonPressed && limitSwitchVal) { // Loop until limit switch triggered
       m_shootVar = -0.4;
       m_loadVar = -0.3;
     } 

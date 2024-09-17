@@ -30,6 +30,11 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoNameCustom2, kAutoNameCustom2);
   m_chooser.AddOption(kAutoNameCustom3, kAutoNameCustom3);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+  // put control modes onto smartdashboard
+  m_mode.SetDefaultOption(kControlModeDual, kControlModeDual);
+  m_mode.AddOption(kControlModeSingle, kControlModeSingle);
+  frc::SmartDashboard::PutData("Control Mode", &m_mode);
 }
 
 
@@ -38,6 +43,9 @@ void Robot::RobotPeriodic() {
   frc::SmartDashboard::PutBoolean("Note Endstop Status", limitSwitch->Get());
   // limitSwitch as limitSwitchVal to reduce processor stress and bouncing
   bool limitSwitchVal = limitSwitch->Get();
+
+  // get control mode
+  m_modeSelected = m_mode.GetSelected();
 }
 
 void Robot::AutonomousInit() {
@@ -174,8 +182,7 @@ void Robot::TeleopPeriodic() {
   m_load->Set(m_loadVar);
 
   
-// DUAL CONTROLLER CONTROL
-/*
+if (m_modeSelected == "Dual Controller Control") {
   // Get bumper values
   bool rightBumper = xboxController1->GetRightBumper(); // Right bumper state
   bool leftBumper = xboxController1->GetLeftBumper();  // Left bumper state
@@ -193,40 +200,36 @@ void Robot::TeleopPeriodic() {
   bool leftTrigger = xboxController2->GetLeftTriggerAxis();
   bool rightTrigger = xboxController2->GetRightTriggerAxis();
 
-  bool secondRightTrigger = xboxController1->GetLeftTriggerAxis();
-  bool secondLeftTrigger = xboxController1->GetRightTriggerAxis();
-*/
-// SINGLE CONTROLLER CONTROl
-
-  // Get bumper values
-  bool rightBumper = xboxController1->GetRightBumper(); // Right bumper state
-  bool leftBumper = xboxController1->GetLeftBumper();  // Left bumper state
+  bool secondRightTrigger = xboxController1->GetRightTriggerAxis();
+  bool secondLeftTrigger = xboxController1->GetLeftTriggerAxis();
   
-  // Get button status
-  bool aButtonPressed = xboxController1->GetAButton(); // A button state
-  bool yButtonPressed = xboxController1->GetYButton();
-  bool xButtonPressed = xboxController1->GetXButton();
-  bool bButtonPressed = xboxController1->GetBButton();
-
-  bool backButtonPressed = xboxController1->GetBackButton();
-  bool startButtonPressed = xboxController1->GetStartButton();
-  // Get trigger status from either controller (commented out)
-  
-  bool leftTrigger = xboxController2->GetLeftTriggerAxis();
-  bool rightTrigger = xboxController2->GetRightTriggerAxis();
-  
- /*
-  bool leftTrigger = xboxController2->GetLeftTriggerAxis();
-  bool rightTrigger = xboxController2->GetRightTriggerAxis();
-*/
-  bool secondRightTrigger = xboxController1->GetLeftTriggerAxis();
-  bool secondLeftTrigger = xboxController1->GetRightTriggerAxis();
-
-
-
-  // Arcade drive for differential drive system
-  // m_robotDrive.ArcadeDrive(speed*m_driverController1.GetLeftY(), -speed*m_driverController1.GetRightX());
   m_robotDrive.ArcadeDrive(speed*m_driverController2.GetLeftY(), -speed*m_driverController2.GetRightX());
+
+
+} else if (m_modeSelected == "Single Controller Control") {
+  // Get bumper values
+  bool rightBumper = xboxController1->GetRightBumper(); // Right bumper state
+  bool leftBumper = xboxController1->GetLeftBumper();  // Left bumper state
+  
+  // Get button status
+  bool aButtonPressed = xboxController1->GetAButton(); // A button state
+  bool yButtonPressed = xboxController1->GetYButton();
+  bool xButtonPressed = xboxController1->GetXButton();
+  bool bButtonPressed = xboxController1->GetBButton();
+
+  bool backButtonPressed = xboxController1->GetBackButton();
+  bool startButtonPressed = xboxController1->GetStartButton();
+  // Get trigger status from either controller (commented out)
+  
+  bool leftTrigger = xboxController1->GetLeftTriggerAxis();
+  bool rightTrigger = xboxController1->GetRightTriggerAxis();
+  
+  bool secondRightTrigger = xboxController1->GetBButtonPressed();
+  bool secondLeftTrigger = xboxController1->GetLeftTriggerAxis();
+
+  // drive
+  m_robotDrive.ArcadeDrive(speed*m_driverController1.GetLeftY(), -speed*m_driverController1.GetRightX());
+} 
 
   
   if (aButtonPressed)  {
@@ -236,7 +239,7 @@ void Robot::TeleopPeriodic() {
     m_loadVar = 0.0;
   }
   if (aButtonPressed) {
-    if (secondLeftTrigger) {
+    if (secondRightTrigger) {
       m_intakeVar = -0.5; // Set m_intake to 0.5 speed after 0.5 seconds delay
       m_loadVar = 1.0;   // Turn on m_load at full speed
     } else {
@@ -259,34 +262,6 @@ void Robot::TeleopPeriodic() {
   }
 
 
-
-
-/* if (bButtonPressed) {
-  if (aButtonPressed) {
-      m_intakeVar = -0.5; // Set m_intake to 0.5 speed after 0.5 seconds delay
-      m_loadVar = 1.0;   // Turn on m_load at full speed
-  } else {
-    m_intakeVar = 0.0;
-    m_loadVar = 0.0;
-  }
-} else {
-  m_shootVar = 0.0;
-  m_loadVar = 0.0;
-} */
-/*
-  // Shoot the note on aButtonPressed
-  if (aButtonPressed)  {
-    // if (timer.Get() <= 1_s) {
-      m_shootVar = 1.0;
-      
-    
-  } else {
-    m_shootVar = 0.0;
-    m_loadVar = 0.0;
-    // m_intakeVar = 0.0; // Stop m_intake if the A button is not pressed or delay not reached
-   //  m_loadVar = 0.0;   // Stop m_load
-  }
-  */
   // Control m_intake with top-bumpers
   if (!aButtonPressed && !yButtonPressed) {
     if (rightBumper && limitSwitchVal) {
@@ -297,6 +272,7 @@ void Robot::TeleopPeriodic() {
       m_intakeVar = 0.0; // Stop m_intake if no bumper is pressed
     }
   }
+
 
 // Drop into amp and trap with Y button
   if (yButtonPressed) {

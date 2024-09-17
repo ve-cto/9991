@@ -48,6 +48,12 @@ public:
   void AutonomousInit() override;
   void AutonomousPeriodic() override;
     
+    
+  frc::SendableChooser<std::mode> m_chooseMode;
+  const std::mode kControlModeDual = "Dual Controller Control";
+  const std::mode kControlModeSingle = "Single Controller Control";
+  std::mode m_modeSelected;
+  
   frc::SendableChooser<std::string> m_chooser;
   const std::string kAutoNameDefault = "Centre Automonous";
   const std::string kAutoNameCustom1 = "Left-Sided Automonous";

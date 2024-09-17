@@ -24,7 +24,7 @@ void Robot::RobotInit() {
   frc::CameraServer::StartAutomaticCapture();
 
   
-
+  // put 4 autos onto smartdashboard
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom1, kAutoNameCustom1);
   m_chooser.AddOption(kAutoNameCustom2, kAutoNameCustom2);
@@ -34,7 +34,9 @@ void Robot::RobotInit() {
 
 
 void Robot::RobotPeriodic() {
+  // display endstop on smartdashboard
   frc::SmartDashboard::PutBoolean("Note Endstop Status", limitSwitch->Get());
+  // limitSwitch as limitSwitchVal to reduce processor stress and bouncing
   bool limitSwitchVal = limitSwitch->Get();
 }
 
@@ -42,9 +44,12 @@ void Robot::AutonomousInit() {
   timer.Reset();
   timer.Start();
 
+  // auto choice as m_autoSelected
   m_autoSelected = m_chooser.GetSelected();
+  // print m_autoSelected
   fmt::print("Auto selected: {}\n", m_autoSelected);
   
+  // initialise values
   m_liftVar = 0.0;
   m_intakeVar = 0.0;
   m_shootVar = 0.0;
@@ -52,11 +57,13 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
+  // set motors to their respective values
   m_lift->Set(m_liftVar);
   m_intake->Set(m_intakeVar);
   m_shoot->Set(m_shootVar);
   m_load->Set(m_loadVar);
   
+// go through each auto comparing it to m_autoSelected
 if (m_autoSelected == "Centre Automonous") {
   if (timer.Get() <= 2_s) { // Spin up shooter
     m_shootVar = 1.0;
@@ -90,6 +97,7 @@ if (m_autoSelected == "Centre Automonous") {
     m_loadVar = 0.0;
     m_shootVar = 0.0;
   }
+
 } else if (m_autoSelected == "Left-Sided Automonous") {
   if (timer.Get() <= 1_s) {
     m_robotDrive.ArcadeDrive(-0.4, 0.4);
@@ -148,20 +156,18 @@ if (m_autoSelected == "Centre Automonous") {
     m_intakeVar = 0.0;
     m_loadVar = 0.0;
     m_shootVar = 0.0;
+// failsafe incase it breaks
 } else {
     m_robotDrive.ArcadeDrive(0.0,0.0);
     m_intakeVar = 0.0;
     m_loadVar = 0.0;
     m_shootVar = 0.0;
-}
-
-// Commented for testing purposes
-  
+    m_liftVar = 0.0;
 }
 
 
 void Robot::TeleopPeriodic() {
-
+  // set motor values
   m_lift->Set(m_liftVar);
   m_intake->Set(m_intakeVar);
   m_shoot->Set(m_shootVar);

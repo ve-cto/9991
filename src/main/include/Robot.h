@@ -48,11 +48,6 @@ public:
   void AutonomousInit() override;
   void AutonomousPeriodic() override;
     
-    
-  frc::SendableChooser<std::mode> m_chooseMode;
-  const std::mode kControlModeDual = "Dual Controller Control";
-  const std::mode kControlModeSingle = "Single Controller Control";
-  std::mode m_modeSelected;
   
   frc::SendableChooser<std::string> m_chooser;
   const std::string kAutoNameDefault = "Centre Automonous";
@@ -98,6 +93,8 @@ private:
   float m_liftVar = 0.0;
 
   bool limitSwitchVal = false;
+
+  
 
   // define m_driverControllerX with the XBox Controllers
   frc::XboxController m_driverController1 {0};

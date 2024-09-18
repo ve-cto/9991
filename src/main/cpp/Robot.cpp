@@ -31,21 +31,30 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoNameCustom3, kAutoNameCustom3);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
-  // put control modes onto smartdashboard
-  m_mode.SetDefaultOption(kControlModeDual, kControlModeDual);
-  m_mode.AddOption(kControlModeSingle, kControlModeSingle);
-  frc::SmartDashboard::PutData("Control Mode", &m_mode);
+
+  // bool buttons
+  bool aButtonPressed;
+  bool bButtonPressed;
+  bool yButtonPressed;
+  bool xButtonPressed;
+  bool leftTrigger;
+  bool rightTrigger;
+  bool secondLeftTrigger;
+  bool secondRightTrigger;
+  bool startButtonPressed;
+  bool backButtonPressed;
+  bool rightBumper;
+  bool leftBumper;
+
 }
 
 
 void Robot::RobotPeriodic() {
   // display endstop on smartdashboard
   frc::SmartDashboard::PutBoolean("Note Endstop Status", limitSwitch->Get());
+
   // limitSwitch as limitSwitchVal to reduce processor stress and bouncing
   bool limitSwitchVal = limitSwitch->Get();
-
-  // get control mode
-  m_modeSelected = m_mode.GetSelected();
 }
 
 void Robot::AutonomousInit() {
@@ -71,6 +80,9 @@ void Robot::AutonomousPeriodic() {
   m_shoot->Set(m_shootVar);
   m_load->Set(m_loadVar);
   
+  limitSwitchVal = limitSwitch->Get();
+
+
 // go through each auto comparing it to m_autoSelected
 if (m_autoSelected == "Centre Automonous") {
   if (timer.Get() <= 2_s) { // Spin up shooter
@@ -87,7 +99,7 @@ if (m_autoSelected == "Centre Automonous") {
   } else if (timer.Get() <= 7.5_s) { // Start to go forward with the intake
     m_robotDrive.ArcadeDrive(0.59, 0);
     if (limitSwitch->Get()) { // Stop for limit switch
-      m_intakeVar = -0.85;
+      m_intakeVar = -0.75;
     }
     m_shootVar = 1.0;
   } else if (timer.Get() <= 11_s) { // Go backwards and spin up shooter
@@ -127,7 +139,7 @@ if (m_autoSelected == "Centre Automonous") {
       m_intakeVar = -0.85;
     }
     m_shootVar = 1.0;
-  } else if (timer.Get() <= 12_s) { // Go backwards and spin up shooter
+  } else if (timer.Get() <= 12_s) { // Go backwards
     m_intakeVar = -0.8;
     m_robotDrive.ArcadeDrive(0.8, 0.0);
   } else {
@@ -172,41 +184,18 @@ if (m_autoSelected == "Centre Automonous") {
     m_shootVar = 0.0;
     m_liftVar = 0.0;
 }
-
+}
 
 void Robot::TeleopPeriodic() {
+  limitSwitchVal = limitSwitch->Get();
+
   // set motor values
   m_lift->Set(m_liftVar);
   m_intake->Set(m_intakeVar);
   m_shoot->Set(m_shootVar);
   m_load->Set(m_loadVar);
 
-  
-if (m_modeSelected == "Dual Controller Control") {
-  // Get bumper values
-  bool rightBumper = xboxController1->GetRightBumper(); // Right bumper state
-  bool leftBumper = xboxController1->GetLeftBumper();  // Left bumper state
-  
-  // Get button status
-  bool aButtonPressed = xboxController1->GetAButton(); // A button state
-  bool yButtonPressed = xboxController1->GetYButton();
-  bool xButtonPressed = xboxController1->GetXButton();
-  bool bButtonPressed = xboxController1->GetBButton();
 
-  bool backButtonPressed = xboxController1->GetBackButton();
-  bool startButtonPressed = xboxController1->GetStartButton();
-  // Get trigger status from either controller (commented out)
-  
-  bool leftTrigger = xboxController2->GetLeftTriggerAxis();
-  bool rightTrigger = xboxController2->GetRightTriggerAxis();
-
-  bool secondRightTrigger = xboxController1->GetRightTriggerAxis();
-  bool secondLeftTrigger = xboxController1->GetLeftTriggerAxis();
-  
-  m_robotDrive.ArcadeDrive(speed*m_driverController2.GetLeftY(), -speed*m_driverController2.GetRightX());
-
-
-} else if (m_modeSelected == "Single Controller Control") {
   // Get bumper values
   bool rightBumper = xboxController1->GetRightBumper(); // Right bumper state
   bool leftBumper = xboxController1->GetLeftBumper();  // Left bumper state
@@ -224,12 +213,12 @@ if (m_modeSelected == "Dual Controller Control") {
   bool leftTrigger = xboxController1->GetLeftTriggerAxis();
   bool rightTrigger = xboxController1->GetRightTriggerAxis();
   
-  bool secondRightTrigger = xboxController1->GetBButtonPressed();
+  bool secondRightTrigger = xboxController1->GetBButton();
   bool secondLeftTrigger = xboxController1->GetLeftTriggerAxis();
 
   // drive
   m_robotDrive.ArcadeDrive(speed*m_driverController1.GetLeftY(), -speed*m_driverController1.GetRightX());
-} 
+
 
   
   if (aButtonPressed)  {

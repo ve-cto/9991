@@ -95,16 +95,16 @@ if (m_autoSelected == "Centre Automonous") {
     m_shootVar = 0.0;
     m_intakeVar = 0.0;
   } else if (timer.Get() <= 5_s) { // Rotate a bit
-    m_robotDrive.ArcadeDrive(0.0, -0.35);
+    // m_robotDrive.ArcadeDrive(0.0, -0.35);
   } else if (timer.Get() <= 7.5_s) { // Start to go forward with the intake
-    m_robotDrive.ArcadeDrive(0.59, 0);
-    if (limitSwitch->Get()) { // Stop for limit switch
-      m_intakeVar = -0.75;
+    m_robotDrive.ArcadeDrive(0.545, 0);
+    if (limitSwitchVal) { // Stop for limit switch
+      m_intakeVar = -0.83;
     }
     m_shootVar = 1.0;
   } else if (timer.Get() <= 11_s) { // Go backwards and spin up shooter
     m_intakeVar = -0.8;
-    m_robotDrive.ArcadeDrive(-0.58, 0);
+    m_robotDrive.ArcadeDrive(-0.48, 0);
     m_shootVar = 1.0;
   } else if (timer.Get() <= 12.5_s) {
     m_intakeVar = 0.55;
@@ -118,72 +118,72 @@ if (m_autoSelected == "Centre Automonous") {
     m_shootVar = 0.0;
   }
 
-} else if (m_autoSelected == "Left-Sided Automonous") {
-  if (timer.Get() <= 1_s) {
-    m_robotDrive.ArcadeDrive(-0.4, 0.4);
-  } else if (timer.Get() <= 3_s) { // Spin up shooter
-    m_shootVar = 1.0;
-  } else if (timer.Get() <= 6_s) { // Shoot!
-    m_loadVar = 1.0;
-    m_intakeVar = -0.7;
-  } else if (timer.Get() <= 6.5_s) { // Stop
-    m_loadVar = 0.0;
-    m_shootVar = 0.0;
-    m_intakeVar = 0.0;
-  } else if (timer.Get() <= 8_s) {
-    m_robotDrive.ArcadeDrive(-0.5, 0.0);
-  } else if (timer.Get() <= 8.7_s) {
-    m_robotDrive.ArcadeDrive(0.0, 0.5);
-  } else if (timer.Get() <= 11_s) {
-    if (limitSwitch->Get()) { // Stop for limit switch
+  } else if (m_autoSelected == "Left-Sided Automonous") {
+    if (timer.Get() <= 1_s) {
+      m_robotDrive.ArcadeDrive(-0.4, 0.4);
+    } else if (timer.Get() <= 3_s) { // Spin up shooter
+      m_shootVar = 1.0;
+    } else if (timer.Get() <= 6_s) { // Shoot!
+      m_loadVar = 1.0;
+      m_intakeVar = -0.7;
+    } else if (timer.Get() <= 6.5_s) { // Stop
+      m_loadVar = 0.0;
+        m_shootVar = 0.0;
+      m_intakeVar = 0.0;
+    } else if (timer.Get() <= 8_s) {
+      m_robotDrive.ArcadeDrive(-0.5, 0.0);
+    } else if (timer.Get() <= 8.7_s) {
+     m_robotDrive.ArcadeDrive(0.0, 0.5);
+    } else if (timer.Get() <= 11_s) {
+     if (limitSwitch->Get()) { // Stop for limit switch
       m_intakeVar = -0.85;
+      }
+      m_shootVar = 1.0;
+    } else if (timer.Get() <= 12_s) { // Go backwards
+      m_intakeVar = -0.8;
+      m_robotDrive.ArcadeDrive(0.8, 0.0);
+    } else {
+      m_robotDrive.ArcadeDrive(0.0,0.0);
+      m_intakeVar = 0.0;
+      m_loadVar = 0.0;
+      m_shootVar = 0.0;
     }
-    m_shootVar = 1.0;
-  } else if (timer.Get() <= 12_s) { // Go backwards
-    m_intakeVar = -0.8;
-    m_robotDrive.ArcadeDrive(0.8, 0.0);
-  } else {
-    m_robotDrive.ArcadeDrive(0.0,0.0);
-    m_intakeVar = 0.0;
-    m_loadVar = 0.0;
-    m_shootVar = 0.0;
-  }
 
-} else if (m_autoSelected == "Shoot and Drive Out") {
-    if (timer.Get() <= 2_s) { // Spin up shooter
-    m_shootVar = 1.0;
-  } else if (timer.Get() <= 4_s) { // Shoot!
-    m_loadVar = 1.0;
-    m_intakeVar = -0.7;
-  } else if (timer.Get() <= 4.5_s) { // Stop
-    m_loadVar = 0.0;
-    m_shootVar = 0.0;
-    m_intakeVar = 0.0;
-  } else if (timer.Get() <= 5_s) { // Rotate a bit
-    m_robotDrive.ArcadeDrive(0.0, -0.35);
-  } else if (timer.Get() <= 8_s) { // Go forward
-    m_robotDrive.ArcadeDrive(0.59, 0);
-  } else {
-    m_robotDrive.ArcadeDrive(0.0,0.0);
-    m_intakeVar = 0.0;
-    m_loadVar = 0.0;
-    m_shootVar = 0.0;
-  }
+  } else if (m_autoSelected == "Shoot and Drive Out") {
+     if (timer.Get() <= 2_s) { // Spin up shooter
+     m_shootVar = 1.0;
+   } else if (timer.Get() <= 4_s) { // Shoot!
+     m_loadVar = 1.0;
+     m_intakeVar = -0.7;
+   } else if (timer.Get() <= 4.5_s) { // Stop
+     m_loadVar = 0.0;
+     m_shootVar = 0.0;
+     m_intakeVar = 0.0;
+   } else if (timer.Get() <= 5_s) { // Rotate a bit
+     m_robotDrive.ArcadeDrive(0.0, -0.35);
+   } else if (timer.Get() <= 8_s) { // Go forward
+     m_robotDrive.ArcadeDrive(0.59, 0);
+   } else {
+     m_robotDrive.ArcadeDrive(0.0,0.0);
+     m_intakeVar = 0.0;
+     m_loadVar = 0.0;
+     m_shootVar = 0.0;
+   }
 
 
-} else if (m_autoSelected == "Do Nothing") {
+  } else if (m_autoSelected == "Do Nothing") {
     m_robotDrive.ArcadeDrive(0.0,0.0);
     m_intakeVar = 0.0;
     m_loadVar = 0.0;
     m_shootVar = 0.0;
 // failsafe incase it breaks
-} else {
+  } else {
     m_robotDrive.ArcadeDrive(0.0,0.0);
     m_intakeVar = 0.0;
     m_loadVar = 0.0;
     m_shootVar = 0.0;
     m_liftVar = 0.0;
-}
+  }
 }
 
 void Robot::TeleopPeriodic() {
@@ -254,7 +254,7 @@ void Robot::TeleopPeriodic() {
   // Control m_intake with top-bumpers
   if (!aButtonPressed && !yButtonPressed) {
     if (rightBumper && limitSwitchVal) {
-      m_intakeVar = -0.7; // Spin intake forward if the limit switch is not pressed while holding right bumper
+      m_intakeVar = -0.8; // Spin intake forward if the limit switch is not pressed while holding right bumper
     } else if (leftBumper) {
         m_intakeVar = 0.7; // Spin m_intake backward at -0.5 speed if left bumper is pressed
     } else {
